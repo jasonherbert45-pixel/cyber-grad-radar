@@ -1,0 +1,1 @@
+print("Cyber Grad Radar online")
