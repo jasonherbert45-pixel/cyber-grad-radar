@@ -1,29 +1,19 @@
-import sqlite3
-from pathlib import Path
+from database import create_database, add_job, get_jobs
 
 
-database_path = Path("data/jobs.db")
+create_database()
 
-database_path.parent.mkdir(exist_ok=True)
-
-connection = sqlite3.connect(database_path)
-
-cursor = connection.cursor()
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS jobs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    company TEXT NOT NULL,
-    title TEXT NOT NULL,
-    location TEXT,
-    url TEXT UNIQUE NOT NULL,
-    date_found TEXT,
-    status TEXT DEFAULT 'new',
-    score INTEGER
+add_job(
+    "Example Security Ltd",
+    "Graduate Cyber Security Engineer",
+    "London",
+    "https://example.com/job/123",
+    "2026-10-08"
 )
-""")
 
-connection.commit()
-connection.close()
+jobs = get_jobs()
+
+for job in jobs:
+    print(job)
 
 print("Cyber Grad Radar database ready.")
